@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Filmów</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <%- include('partials/nav') %>
+        <h1>Lista Filmów</h1>
+        <ul>
+            <% movies.forEach(movie=> { %>
+                <li>
+                    <%= movie.title %> - Reżyseria: <%= movie.director %>, Ocena: <%= movie.rating %>
+                                <% if(movie.watched) { %>[X]<% } %>
+                                        <span class="movie-actions">
+                                            <a href="/movies/<%= movie.id %>/reviews">Recenzje</a>
+                                            <form action="/movies/<%= movie.id %>/watched" method="POST"
+                                                style="display: inline;">
+                                                <button type="submit">Oznacz jako obejrzane</button>
+                                            </form>
+                                        </span>
+                                        <br>
+                                        <form action="/movies/<%= movie.id %>/delete" method="POST"
+                                            style="display: inline;">
+                                            <button type="submit">Usuń</button>
+                                        </form>
+                                        <a href="/movies/<%= movie.id %>/edit" style="display: inline;">
+                                            <button type="button">Edytuj</button>
+                                        </a>
+                </li>
+                <% }) %>
+        </ul>
+        <form action="/movies/delete-all" method="POST">
+            <button type="submit">Wyczyść listę</button>
+        </form>
+</body>
+
+</html>
